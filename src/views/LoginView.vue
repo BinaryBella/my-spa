@@ -1,9 +1,9 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-gray-100 dark:from-gray-950 dark:to-gray-900 px-4 py-12 relative overflow-hidden">
+  <div class="min-h-screen flex items-center justify-center bg-linear-to-br from-blue-50 via-white to-gray-100 dark:from-gray-950 dark:via-gray-900 dark:to-black px-4 py-12 relative overflow-hidden">
     
     <!-- Login Card -->
     <div class="relative w-full max-w-md">
-      <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl shadow-xl p-8 sm:p-12">
+      <div class="bg-white dark:bg-gray-900 border-2 border-gray-300 dark:border-gray-700 rounded-2xl shadow-2xl p-8 sm:p-12">
         
         <!-- Logo/Icon -->
         <div class="flex justify-center mb-8">
@@ -16,7 +16,7 @@
 
         <!-- Title -->
         <div class="text-center mb-8">
-          <h2 class="text-3xl font-extrabold text-gray-900 dark:text-white mb-2">
+          <h2 class="text-3xl font-extrabold text-gray-900 dark:text-gray-100 mb-2">
             Welcome Back
           </h2>
           <p class="text-gray-600 dark:text-gray-400">
@@ -29,7 +29,7 @@
           
           <!-- Username Input -->
           <div class="relative">
-            <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+            <label class="block text-sm font-semibold text-gray-800 dark:text-gray-200 mb-2">
               Username
             </label>
             <div class="relative">
@@ -42,7 +42,7 @@
                 v-model="username"
                 type="text"
                 placeholder="Enter your username"
-                class="w-full pl-12 pr-4 py-3.5 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent transition-all"
+                class="w-full pl-12 pr-4 py-3.5 bg-gray-50 dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-700 rounded-lg text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent transition-all"
                 required
               />
             </div>
@@ -50,7 +50,7 @@
 
           <!-- Password Input -->
           <div class="relative">
-            <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+            <label class="block text-sm font-semibold text-gray-800 dark:text-gray-200 mb-2">
               Password
             </label>
             <div class="relative">
@@ -63,7 +63,7 @@
                 v-model="password"
                 type="password"
                 placeholder="Enter your password"
-                class="w-full pl-12 pr-4 py-3.5 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent transition-all"
+                class="w-full pl-12 pr-4 py-3.5 bg-gray-50 dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-700 rounded-lg text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent transition-all"
                 required
               />
             </div>
@@ -72,7 +72,7 @@
           <!-- Error Message -->
           <Transition name="shake">
             <div v-if="errorMsg" class="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4 flex items-center gap-3">
-              <svg class="w-5 h-5 text-red-600 dark:text-red-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+              <svg class="w-5 h-5 text-red-600 dark:text-red-400 shrink-0" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
               </svg>
               <p class="text-sm font-medium text-red-600 dark:text-red-400">{{ errorMsg }}</p>
@@ -96,8 +96,8 @@
         </form>
 
         <!-- Demo Credentials -->
-        <div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
-          <p class="text-center text-sm text-gray-600 dark:text-gray-400 mb-3">
+        <div class="mt-8 pt-6 border-t border-gray-300 dark:border-gray-700">
+          <p class="text-center text-sm text-gray-700 dark:text-gray-300 mb-3">
             Demo Credentials
           </p>
           <div class="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 space-y-2">

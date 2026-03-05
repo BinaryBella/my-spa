@@ -12,7 +12,7 @@
   <Transition name="slide">
     <div
       v-if="cartStore.isOpen"
-      class="fixed top-0 right-0 h-full w-full sm:w-96 bg-white dark:bg-gray-900 shadow-2xl z-50 flex flex-col"
+      class="fixed top-0 right-0 h-full w-full sm:w-96 bg-white dark:bg-gray-900 shadow-2xl z-50 flex flex-col border-l border-gray-300 dark:border-gray-700"
     >
       <!-- Header with solid color -->
       <div class="relative overflow-hidden bg-blue-600 dark:bg-blue-500 px-6 py-6">
@@ -42,12 +42,12 @@
 
       <!-- Empty state -->
       <div v-if="cartStore.items.length === 0" class="flex-1 flex flex-col items-center justify-center p-8 text-center">
-        <div class="w-32 h-32 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mb-6">
-          <svg class="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="w-32 h-32 bg-gray-200 dark:bg-gray-800 rounded-full flex items-center justify-center mb-6 border-2 border-gray-300 dark:border-gray-700">
+          <svg class="w-16 h-16 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
           </svg>
         </div>
-        <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-2">Your cart is empty</h3>
+        <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">Your cart is empty</h3>
         <p class="text-gray-600 dark:text-gray-400 mb-6">Add some products to get started!</p>
         <button
           @click="cartStore.isOpen = false"
@@ -63,12 +63,12 @@
           <div
             v-for="item in cartStore.items"
             :key="item.product.id"
-            class="group relative bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:shadow-md transition-all duration-300"
+            class="group relative bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg p-4 hover:shadow-lg transition-all duration-300"
           >
             <div class="flex gap-4">
               <!-- Product Image -->
-              <div class="relative flex-shrink-0">
-                <div class="w-20 h-20 bg-white dark:bg-gray-700 rounded-lg overflow-hidden shadow-sm border border-gray-200 dark:border-gray-600">
+              <div class="relative shrink-0">
+                <div class="w-20 h-20 bg-white dark:bg-gray-700 rounded-lg overflow-hidden shadow-sm border-2 border-gray-300 dark:border-gray-600">
                   <img 
                     :src="item.product.thumbnail" 
                     :alt="item.product.title"
@@ -83,7 +83,7 @@
 
               <!-- Product Info -->
               <div class="flex-1 min-w-0">
-                <h3 class="font-semibold text-gray-900 dark:text-white text-sm mb-1 line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                <h3 class="font-semibold text-gray-900 dark:text-gray-100 text-sm mb-1 line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                   {{ item.product.title }}
                 </h3>
                 <p class="text-xs text-gray-500 dark:text-gray-400 mb-2 capitalize">
@@ -102,7 +102,7 @@
               <!-- Remove button -->
               <button
                 @click="cartStore.removeItem(item.product.id)"
-                class="flex-shrink-0 self-start p-2 bg-red-50 dark:bg-red-900/20 hover:bg-red-100 dark:hover:bg-red-900/30 text-red-600 dark:text-red-400 rounded-lg transition-all duration-300 border border-red-200 dark:border-red-800"
+                class="shrink-0 self-start p-2 bg-red-50 dark:bg-red-900/20 hover:bg-red-100 dark:hover:bg-red-900/30 text-red-600 dark:text-red-400 rounded-lg transition-all duration-300 border border-red-200 dark:border-red-800"
                 aria-label="Remove item"
               >
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -115,7 +115,7 @@
       </div>
 
       <!-- Footer -->
-      <div v-if="cartStore.items.length > 0" class="border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 px-6 py-6 space-y-4">
+      <div v-if="cartStore.items.length > 0" class="border-t border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 px-6 py-6 space-y-4">
         
         <!-- Subtotal -->
         <div class="space-y-2">

@@ -36,7 +36,7 @@
         
         <!-- Left: Image Section -->
         <div class="space-y-4">
-          <div class="relative bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl shadow-lg overflow-hidden group">
+          <div class="relative bg-white dark:bg-gray-900 border-2 border-gray-300 dark:border-gray-700 rounded-2xl shadow-lg overflow-hidden group">
             <!-- Main image -->
             <div class="aspect-square overflow-hidden">
               <img 
@@ -69,14 +69,14 @@
             </div>
 
             <!-- Category badge -->
-            <div class="absolute top-6 right-6 px-4 py-2 rounded-lg text-sm font-bold bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 uppercase tracking-wider shadow-md border border-gray-200 dark:border-gray-700">
+            <div class="absolute top-6 right-6 px-4 py-2 rounded-lg text-sm font-bold bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 uppercase tracking-wider shadow-md border-2 border-gray-300 dark:border-gray-700">
               {{ product.category }}
             </div>
           </div>
 
           <!-- Thumbnail gallery (placeholder for future enhancement) -->
           <div class="grid grid-cols-4 gap-3">
-            <div v-for="i in 4" :key="i" class="aspect-square bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg shadow-sm overflow-hidden opacity-50 hover:opacity-100 transition-opacity cursor-pointer">
+            <div v-for="i in 4" :key="i" class="aspect-square bg-white dark:bg-gray-900 border-2 border-gray-300 dark:border-gray-700 rounded-lg shadow-sm overflow-hidden opacity-50 hover:opacity-100 transition-opacity cursor-pointer">
               <img :src="product.thumbnail" :alt="`${product.title} view ${i}`" class="w-full h-full object-cover" />
             </div>
           </div>
@@ -84,20 +84,20 @@
 
         <!-- Right: Product Info -->
         <div class="flex flex-col">
-          <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl shadow-lg p-8 lg:p-10 flex-1">
+          <div class="bg-white dark:bg-gray-900 border-2 border-gray-300 dark:border-gray-700 rounded-2xl shadow-lg p-8 lg:p-10 flex-1">
             
             <!-- Title -->
-            <h1 class="text-3xl lg:text-4xl font-extrabold text-gray-900 dark:text-white mb-4 leading-tight">
+            <h1 class="text-3xl lg:text-4xl font-extrabold text-gray-900 dark:text-gray-100 mb-4 leading-tight">
               {{ product.title }}
             </h1>
 
             <!-- Description -->
-            <p class="text-lg text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
+            <p class="text-lg text-gray-700 dark:text-gray-300 mb-8 leading-relaxed">
               {{ product.description }}
             </p>
 
             <!-- Price Section -->
-            <div class="mb-8 p-6 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl">
+            <div class="mb-8 p-6 bg-blue-50 dark:bg-blue-900/20 border-2 border-blue-200 dark:border-blue-800 rounded-xl">
               <div class="flex items-baseline gap-3">
                 <span class="text-5xl font-extrabold text-blue-600 dark:text-blue-500">
                   ${{ product.price }}

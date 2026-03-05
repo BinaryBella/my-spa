@@ -191,6 +191,7 @@ import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import type { Product } from '../types'
 import { useCartStore } from '../stores/cartStore'
+import { fetchWithRetry, getCachedData, setCachedData } from '../utils/api'
 
 const route = useRoute()
 const cartStore = useCartStore()
@@ -199,7 +200,7 @@ const loading = ref(true)
 const error = ref<string | null>(null)
 
 const CACHE_KEY_PREFIX = 'product_detail_'
-const CACHE_DURATION = 1000 * 60 * 10 // 10 minutes
+const CACHE_DURATION = 1000 * 60 * 30 // 30 minutes
 
 const handleAddToCart = () => {
   if (product.value) {
@@ -213,43 +214,24 @@ onMounted(async () => {
   const cacheKey = CACHE_KEY_PREFIX + productId
 
   // Check localStorage cache
-  try {
-    const cached = localStorage.getItem(cacheKey)
-    if (cached) {
-      const { data, timestamp } = JSON.parse(cached)
-      if (Date.now() - timestamp < CACHE_DURATION) {
-        product.value = data
-        loading.value = false
-        return
-      }
-      localStorage.removeItem(cacheKey)
-    }
-  } catch (e) {
-    // Continue to fetch
+  const cached = getCachedData<Product>(cacheKey, CACHE_DURATION)
+  if (cached) {
+    product.value = cached
+    loading.value = false
+    return
   }
 
-  // Fetch from API
+  // Fetch from API with rate limiting and retries
   try {
-    const res = await fetch(`https://dummyjson.com/products/${productId}`)
-    
-    if (res.status === 429) {
-      throw new Error('Too many requests. Please wait a moment and try again.')
-    }
-    
-    if (!res.ok) {
-      throw new Error('Product not found')
-    }
-    
+    const res = await fetchWithRetry(`https://dummyjson.com/products/${productId}`)
     const data = await res.json()
     product.value = data
 
     // Save to cache
-    localStorage.setItem(cacheKey, JSON.stringify({
-      data,
-      timestamp: Date.now()
-    }))
+    setCachedData(cacheKey, data)
   } catch (e) {
     error.value = e instanceof Error ? e.message : 'Failed to load product'
+    console.error('[ProductDetailView] Error:', e)
   } finally {
     loading.value = false
   }

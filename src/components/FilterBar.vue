@@ -58,6 +58,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
+import { fetchWithRetry, getCachedData, setCachedData } from '../utils/api'
 
 interface Category { slug: string; name: string }
 
@@ -66,7 +67,7 @@ defineEmits<{ filter: [slug: string] }>()
 
 const categories = ref<Category[]>([])
 
-// Cache categories in memory and localStorage
+// Cache categories with longer duration since they rarely change
 const CACHE_KEY = 'dummyjson_categories'
 const CACHE_DURATION = 1000 * 60 * 60 * 24 // 24 hours
 
@@ -78,36 +79,23 @@ const selectedCategoryName = computed(() => {
 
 onMounted(async () => {
   // Check localStorage cache first
-  const cached = localStorage.getItem(CACHE_KEY)
+  const cached = getCachedData<Category[]>(CACHE_KEY, CACHE_DURATION)
   if (cached) {
-    try {
-      const { data, timestamp } = JSON.parse(cached)
-      if (Date.now() - timestamp < CACHE_DURATION) {
-        categories.value = data
-        return
-      }
-    } catch (e) {
-      localStorage.removeItem(CACHE_KEY)
-    }
+    categories.value = cached
+    return
   }
 
-  // Fetch from API with retry logic
+  // Fetch from API with retry and rate limiting
   try {
-    const res = await fetch('https://dummyjson.com/products/categories')
-    if (res.status === 429) {
-      console.warn('Rate limited. Using empty categories.')
-      return
-    }
+    const res = await fetchWithRetry('https://dummyjson.com/products/categories')
     const data = await res.json()
     categories.value = data
     
     // Cache in localStorage
-    localStorage.setItem(CACHE_KEY, JSON.stringify({
-      data,
-      timestamp: Date.now()
-    }))
+    setCachedData(CACHE_KEY, data)
   } catch (e) {
-    console.error('Failed to load categories:', e)
+    console.error('[FilterBar] Failed to load categories:', e)
+    // Fail silently - app can still function without category filters
   }
 })
 </script>

@@ -6,8 +6,7 @@
       @input="onSearch"
       type="text"
       placeholder="Search products..."
-      class="w-full border border-gray-300 rounded-xl px-4 py-3 mb-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-    />
+      class="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-xl px-4 py-3 mb-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"    />
 
     <!-- Filter -->
     <FilterBar :selected="selectedCategory" @filter="onFilter" />

@@ -3,6 +3,8 @@
     <RouterLink to="/" class="text-blue-500 hover:underline text-sm mb-6 inline-block">← Back to Store</RouterLink>
 
     <div v-if="loading" class="text-center text-gray-400 py-20">Loading...</div>
+    
+    <div v-else-if="error" class="text-center text-red-400 py-20">{{ error }}</div>
 
     <div v-else-if="product" class="bg-white rounded-2xl shadow-lg overflow-hidden md:flex">
       <img :src="product.thumbnail" :alt="product.title" class="w-full md:w-80 object-cover" />
@@ -35,10 +37,21 @@ const route = useRoute()
 const cartStore = useCartStore()
 const product = ref<Product | null>(null)
 const loading = ref(true)
+const error = ref<string | null>(null)
 
 onMounted(async () => {
-  const res = await fetch(`https://dummyjson.com/products/${route.params.id}`)
-  product.value = await res.json()
-  loading.value = false
+  try {
+    const res = await fetch(`https://dummyjson.com/products/${route.params.id}`)
+    
+    if (!res.ok) {
+      throw new Error('Product not found')
+    }
+    
+    product.value = await res.json()
+  } catch (e) {
+    error.value = e instanceof Error ? e.message : 'Failed to load product'
+  } finally {
+    loading.value = false
+  }
 })
 </script>

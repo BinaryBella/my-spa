@@ -34,11 +34,18 @@ const { products, loading, error, fetchProducts } = useProducts()
 const searchQuery = ref('')
 const selectedCategory = ref('')
 
+let searchTimeout: number | undefined
+
 onMounted(() => fetchProducts())
 
 function onSearch() {
   selectedCategory.value = ''
-  fetchProducts(undefined, searchQuery.value)
+  
+  // Debounce search to avoid excessive API calls
+  clearTimeout(searchTimeout)
+  searchTimeout = window.setTimeout(() => {
+    fetchProducts(undefined, searchQuery.value)
+  }, 500)
 }
 
 function onFilter(slug: string) {

@@ -40,12 +40,10 @@ onMounted(() => fetchProducts())
 
 function onSearch() {
   selectedCategory.value = ''
-  
-  // Debounce search to avoid excessive API calls
   clearTimeout(searchTimeout)
-  searchTimeout = window.setTimeout(() => {
+  searchTimeout = setTimeout(() => {
     fetchProducts(undefined, searchQuery.value)
-  }, 500)
+  }, 500) // waits 500ms after user stops typing
 }
 
 function onFilter(slug: string) {

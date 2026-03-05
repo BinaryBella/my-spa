@@ -31,35 +31,19 @@ const categories = ref<Category[]>([])
 let cachedCategories: Category[] | null = null
 
 onMounted(async () => {
-  // Use cached categories if available
-  if (cachedCategories) {
-    categories.value = cachedCategories
-    return
-  }
-
   try {
     const res = await fetch('https://dummyjson.com/products/categories')
-    
     if (res.status === 429) {
-      console.warn('Rate limited: using fallback categories')
-      // Fallback categories if rate limited
-      categories.value = [
-        { slug: 'beauty', name: 'beauty' },
-        { slug: 'fragrances', name: 'fragrances' },
-        { slug: 'furniture', name: 'furniture' },
-        { slug: 'groceries', name: 'groceries' }
-      ]
+      // Retry after 3 seconds
+      setTimeout(async () => {
+        const retry = await fetch('https://dummyjson.com/products/categories')
+        categories.value = await retry.json()
+      }, 3000)
       return
     }
-    
-    if (!res.ok) {
-      throw new Error(`HTTP error! status: ${res.status}`)
-    }
-    
-    cachedCategories = await res.json()
-    categories.value = cachedCategories
-  } catch (err) {
-    console.error('Failed to fetch categories:', err)
+    categories.value = await res.json()
+  } catch (e) {
+    console.error('Failed to load categories')
   }
 })
 </script>

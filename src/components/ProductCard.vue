@@ -3,7 +3,8 @@
     <img :src="product.thumbnail" :alt="product.title" class="w-full h-48 object-cover" />
     <div class="p-4">
       <p class="text-xs text-gray-400 uppercase mb-1">{{ product.category }}</p>
-      <h3 class="font-semibold text-gray-800 dark:text-white text-sm mb-2 line-clamp-2">      <div class="flex justify-between items-center">
+      <h3 class="font-semibold text-gray-800 dark:text-white text-sm mb-2 line-clamp-2">{{ product.title }}</h3>
+      <div class="flex justify-between items-center">
         <span class="text-blue-600 font-bold">${{ product.price }}</span>
         <span class="text-yellow-500 text-sm">⭐ {{ product.rating }}</span>
       </div>

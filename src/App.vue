@@ -1,7 +1,11 @@
 <template>
-  <div class="min-h-screen bg-gray-100 dark:bg-gray-800 transition-colors">
+  <div class="min-h-screen bg-white dark:bg-gray-950 transition-colors duration-300">
     <NavBar />
-    <RouterView />
+    <RouterView v-slot="{ Component, route }">
+      <Transition :name="route.meta.transition || 'fade'" mode="out-in">
+        <component :is="Component" :key="route.path" />
+      </Transition>
+    </RouterView>
     <CardSidebar />
   </div>
 </template>

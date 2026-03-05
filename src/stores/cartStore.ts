@@ -4,6 +4,7 @@ import type { CartItem, Product } from '../types'
 
 export const useCartStore = defineStore('cart', () => {
   const items = ref<CartItem[]>([])
+  const isOpen = ref(false)
 
   const totalItems = computed(() =>
     items.value.reduce((sum, item) => sum + item.quantity, 0)
@@ -20,6 +21,7 @@ export const useCartStore = defineStore('cart', () => {
     } else {
       items.value.push({ product, quantity: 1 })
     }
+    isOpen.value = true // auto-open cart when item added
   }
 
   function removeItem(productId: number) {
@@ -30,5 +32,5 @@ export const useCartStore = defineStore('cart', () => {
     items.value = []
   }
 
-  return { items, totalItems, totalPrice, addItem, removeItem, clearCart }
+  return { items, totalItems, totalPrice, isOpen, addItem, removeItem, clearCart }
 })

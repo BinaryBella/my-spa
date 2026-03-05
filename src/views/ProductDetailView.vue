@@ -39,15 +39,49 @@ const product = ref<Product | null>(null)
 const loading = ref(true)
 const error = ref<string | null>(null)
 
+const CACHE_KEY_PREFIX = 'product_detail_'
+const CACHE_DURATION = 1000 * 60 * 10 // 10 minutes
+
 onMounted(async () => {
+  const productId = route.params.id
+  const cacheKey = CACHE_KEY_PREFIX + productId
+
+  // Check localStorage cache
   try {
-    const res = await fetch(`https://dummyjson.com/products/${route.params.id}`)
+    const cached = localStorage.getItem(cacheKey)
+    if (cached) {
+      const { data, timestamp } = JSON.parse(cached)
+      if (Date.now() - timestamp < CACHE_DURATION) {
+        product.value = data
+        loading.value = false
+        return
+      }
+      localStorage.removeItem(cacheKey)
+    }
+  } catch (e) {
+    // Continue to fetch
+  }
+
+  // Fetch from API
+  try {
+    const res = await fetch(`https://dummyjson.com/products/${productId}`)
+    
+    if (res.status === 429) {
+      throw new Error('Too many requests. Please wait a moment and try again.')
+    }
     
     if (!res.ok) {
       throw new Error('Product not found')
     }
     
-    product.value = await res.json()
+    const data = await res.json()
+    product.value = data
+
+    // Save to cache
+    localStorage.setItem(cacheKey, JSON.stringify({
+      data,
+      timestamp: Date.now()
+    }))
   } catch (e) {
     error.value = e instanceof Error ? e.message : 'Failed to load product'
   } finally {

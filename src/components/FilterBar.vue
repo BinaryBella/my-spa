@@ -27,23 +27,42 @@ defineEmits<{ filter: [slug: string] }>()
 
 const categories = ref<Category[]>([])
 
-// Cache categories since they rarely change
-let cachedCategories: Category[] | null = null
+// Cache categories in memory and localStorage
+const CACHE_KEY = 'dummyjson_categories'
+const CACHE_DURATION = 1000 * 60 * 60 * 24 // 24 hours
 
 onMounted(async () => {
+  // Check localStorage cache first
+  const cached = localStorage.getItem(CACHE_KEY)
+  if (cached) {
+    try {
+      const { data, timestamp } = JSON.parse(cached)
+      if (Date.now() - timestamp < CACHE_DURATION) {
+        categories.value = data
+        return
+      }
+    } catch (e) {
+      localStorage.removeItem(CACHE_KEY)
+    }
+  }
+
+  // Fetch from API with retry logic
   try {
     const res = await fetch('https://dummyjson.com/products/categories')
     if (res.status === 429) {
-      // Retry after 3 seconds
-      setTimeout(async () => {
-        const retry = await fetch('https://dummyjson.com/products/categories')
-        categories.value = await retry.json()
-      }, 3000)
+      console.warn('Rate limited. Using empty categories.')
       return
     }
-    categories.value = await res.json()
+    const data = await res.json()
+    categories.value = data
+    
+    // Cache in localStorage
+    localStorage.setItem(CACHE_KEY, JSON.stringify({
+      data,
+      timestamp: Date.now()
+    }))
   } catch (e) {
-    console.error('Failed to load categories')
+    console.error('Failed to load categories:', e)
   }
 })
 </script>

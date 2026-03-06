@@ -29,7 +29,7 @@
           
           <!-- Username Input -->
           <div class="relative">
-            <label class="block text-sm font-semibold text-gray-800 dark:text-gray-200 mb-2">
+            <label for="username" class="block text-sm font-semibold text-gray-800 dark:text-gray-200 mb-2">
               Username
             </label>
             <div class="relative">
@@ -39,6 +39,7 @@
                 </svg>
               </div>
               <input
+                id="username"
                 v-model="username"
                 type="text"
                 placeholder="Enter your username"
@@ -50,7 +51,7 @@
 
           <!-- Password Input -->
           <div class="relative">
-            <label class="block text-sm font-semibold text-gray-800 dark:text-gray-200 mb-2">
+            <label for="password" class="block text-sm font-semibold text-gray-800 dark:text-gray-200 mb-2">
               Password
             </label>
             <div class="relative">
@@ -60,6 +61,7 @@
                 </svg>
               </div>
               <input
+                id="password"
                 v-model="password"
                 type="password"
                 placeholder="Enter your password"

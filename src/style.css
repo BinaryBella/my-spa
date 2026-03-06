@@ -1,5 +1,21 @@
 @import "tailwindcss";
 
+/* Configure Tailwind CSS v4 Dark Mode to use the .dark class */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-scheme: light dark;
+}
+
+/* Ensure proper dark mode base styles */
+:root {
+  color-scheme: light;
+}
+
+:root.dark {
+  color-scheme: dark;
+}
+
 /* Custom Animation Keyframes */
 @keyframes blob {
   0% { transform: translate(0px, 0px) scale(1); }

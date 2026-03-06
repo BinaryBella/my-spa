@@ -1,5 +1,47 @@
-# Vue 3 + TypeScript + Vite
+# The Modern Single Page Application (SPA)
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+This is a Data-Driven Single Page Application built for the CS3404 GUI Programming Mini Project.
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+## Tech Stack
+- Vue 3 (Composition API)
+- TypeScript
+- Vite
+- Tailwind CSS (v4)
+- Pinia (State Management)
+- Vue Router
+
+## Prerequisites
+Make sure you have [Node.js](https://nodejs.org/) installed on your machine.
+
+## Setup Instructions
+
+1. **Clone the repository and navigate to the project folder:**
+   ```bash
+   # Extract the ZIP file or clone the repo
+   cd my-spa
+   ```
+
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+
+3. **Run the development server:**
+   ```bash
+   npm run dev
+   ```
+
+4. **Open the application:**
+   Click the local URL shown in your terminal (typically `http://localhost:5173/`) to view the application in your browser.
+
+## Build for Production
+
+To create a production-ready build:
+```bash
+npm run build
+```
+
+To preview the production build locally:
+```bash
+npm run preview
+```

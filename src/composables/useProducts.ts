@@ -43,8 +43,8 @@ export function useProducts() {
       // Save to both caches
       cache.set(cacheKey, data.products)
       setCachedData(STORAGE_PREFIX + cacheKey, data.products)
-    } catch (e: any) {
-      error.value = e.message || 'Failed to fetch products'
+    } catch (e: unknown) {
+      error.value = e instanceof Error ? e.message : 'Failed to fetch products'
       console.error('[useProducts] Error:', e)
     } finally {
       loading.value = false

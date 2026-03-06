@@ -4,7 +4,7 @@ import type { LoginResponse } from '../types'
 
 export const useAuthStore = defineStore('auth', () => {
   const token = ref<string | null>(localStorage.getItem('token'))
-  const user = ref<Omit<LoginResponse, 'token'> | null>(
+  const user = ref<Omit<LoginResponse, 'accessToken' | 'refreshToken'> | null>(
     JSON.parse(localStorage.getItem('user') || 'null')
   )
 
@@ -21,10 +21,10 @@ export const useAuthStore = defineStore('auth', () => {
       if (!res.ok) return 'Invalid username or password'
 
       const data: LoginResponse = await res.json()
-      token.value = data.token
+      token.value = data.accessToken
       user.value = { id: data.id, username: data.username, email: data.email, firstName: data.firstName, lastName: data.lastName }
 
-      localStorage.setItem('token', data.token)
+      localStorage.setItem('token', data.accessToken)
       localStorage.setItem('user', JSON.stringify(user.value))
       return null
     } catch {

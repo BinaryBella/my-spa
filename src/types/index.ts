@@ -30,7 +30,8 @@ export interface User {
     email: string
     firstName: string
     lastName: string
-    token: string
+    accessToken: string
+    refreshToken: string
 }
 
 export interface LoginResponse {
@@ -39,5 +40,6 @@ export interface LoginResponse {
   email: string
   firstName: string
   lastName: string
-  token: string
+  accessToken: string
+  refreshToken: string
 }

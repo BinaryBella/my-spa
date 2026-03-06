@@ -45,7 +45,7 @@
           
           <button
             v-if="authStore.isLoggedIn"
-            @click="authStore.logout()"
+            @click="handleLogout"
             class="px-4 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 flex items-center gap-2 border border-gray-200 dark:border-gray-700"
           >
             <span class="hidden sm:inline">Logout</span>
@@ -55,7 +55,7 @@
           </button>
           
           <RouterLink
-            v-else
+            v-else-if="route.path !== '/login'"
             to="/login"
             class="px-4 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 flex items-center gap-2 border border-gray-200 dark:border-gray-700"
           >
@@ -67,6 +67,7 @@
 
           <!-- Premium cart button -->
           <button
+            v-if="route.path !== '/login'"
             @click="cartStore.isOpen = true"
             class="relative flex items-center gap-2 bg-blue-600 dark:bg-blue-500 hover:bg-blue-700 dark:hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold text-sm shadow-sm hover:shadow-md transition-all duration-300 group"
           >
@@ -89,8 +90,16 @@
 import { useCartStore } from '../stores/cartStore'
 import { useAuthStore } from '../stores/authStore'
 import { useDarkMode } from '../composables/useDarkMode'
+import { useRouter, useRoute } from 'vue-router'
 
 const cartStore = useCartStore()
 const authStore = useAuthStore()
 const { isDark, toggleDark } = useDarkMode()
+const router = useRouter()
+const route = useRoute()
+
+const handleLogout = () => {
+  authStore.logout()
+  router.push('/login')
+}
 </script>
